@@ -37,6 +37,7 @@ if not os.path.exists(PASSWORD_FILE):
 # 创建数据库引擎
 engine = create_engine('sqlite:///ZZBNJZ_records.db')
 Base = declarative_base()
+Base.metadata.create_all(engine)
 
 def clear_database():
     session = Session()
