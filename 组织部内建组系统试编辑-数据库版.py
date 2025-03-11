@@ -27,7 +27,7 @@ bucket = oss2.Bucket(auth, OSS_ENDPOINT, OSS_BUCKET_NAME)
 
 # 初始化 CSV 文件（如果文件不存在）
 if not os.path.exists(CSV_FILE):
-    pd.DataFrame(columns=['姓名', '部门', '上传项目', '金额', 'PDF文件路径', '备注', '材料分类']).to_csv(CSV_FILE, index=False)
+    pd.DataFrame(columns=['姓名', '部门', '上传项目', '金额', '材料分类', '操作时间', 'PDF文件路径', '备注']).to_csv(CSV_FILE, index=False)
 
 # 初始化密码文件（如果文件不存在）
 if not os.path.exists(PASSWORD_FILE):
@@ -49,6 +49,7 @@ class Record(Base):
     pdf_path = Column(Text)
     remarks = Column(Text)
     category = Column(String)
+    operation_time = Column(String)  # 新增操作时间列
 
 Base.metadata.create_all(engine)
 
@@ -59,8 +60,8 @@ Session = sessionmaker(bind=engine)
 def load_data():
     session = Session()
     records = session.query(Record).all()
-    return pd.DataFrame([(r.name, r.department, r.item, r.amount, r.pdf_path, r.remarks, r.category) for r in records],
-                        columns=['姓名', '部门', '上传项目', '金额', 'PDF文件路径', '备注', '材料分类'])
+    return pd.DataFrame([(r.name, r.department, r.item, r.amount, r.category, r.operation_time, r.pdf_path, r.remarks) for r in records],
+                        columns=['姓名', '部门', '上传项目', '金额', '材料分类', '操作时间', 'PDF文件路径', '备注'])
 
 # 将数据保存到数据库
 def save_data(df):
@@ -76,7 +77,8 @@ def save_data(df):
             amount=row['金额'],
             pdf_path=row['PDF文件路径'],
             remarks=row['备注'],
-            category=row['材料分类']
+            category=row['材料分类'],
+            operation_time=row['操作时间']  # 保存操作时间
         )
         session.add(record)
     session.commit()
@@ -174,8 +176,8 @@ def input_page():
                     st.session_state.edit_record_index = existing_record.index[0]
                 else:
                     # 新增记录
-                    new_record = pd.DataFrame([[name, selected_department, item, amount, pdf_path, remarks, selected_category]], 
-                                           columns=['姓名', '部门', '上传项目', '金额', 'PDF文件路径', '备注', '材料分类'])
+                    new_record = pd.DataFrame([[name, selected_department, item, amount, selected_category, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), pdf_path, remarks]], 
+                                           columns=['姓名', '部门', '上传项目', '金额', '材料分类', '操作时间', 'PDF文件路径', '备注'])
                     df = pd.concat([df, new_record], ignore_index=True)
                     save_data(df)
                     st.success("上传记录已添加！")
@@ -209,7 +211,7 @@ def details_page():
     
     password = st.text_input("请输入密码", type="password")
     if st.button("验证密码"):
-        if password == get_password() or password == "fdfz2023":
+        if password == get_password():
             st.session_state["authenticated"] = True
             st.success("密码正确！")
         else:
