@@ -339,11 +339,6 @@ def password_page():
             set_password(new_password)
             st.success("密码已更新！")
 
-# 检查并删除现有数据库文件
-if os.path.exists('ZZBNJZ_records.db'):
-    os.remove('ZZBNJZ_records.db')
-    st.success("数据库文件已删除")
-
 # 主页面导航
 st.sidebar.title("导航")
 page = st.sidebar.radio("选择页面", ["输入界面", "账本中心", "查询材料上传历史", "密码设置页面"])
