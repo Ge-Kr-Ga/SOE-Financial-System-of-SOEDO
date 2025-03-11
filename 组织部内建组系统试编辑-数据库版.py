@@ -38,6 +38,12 @@ if not os.path.exists(PASSWORD_FILE):
 engine = create_engine('sqlite:///ZZBNJZ_records.db')
 Base = declarative_base()
 
+def clear_database():
+    session = Session()
+    session.query(Record).delete()
+    session.commit()
+    st.success("数据库已清空！")
+
 class Record(Base):
     __tablename__ = 'records'
     
@@ -105,6 +111,9 @@ def set_password(new_password):
 def input_page():
     st.title("经组财务报销网站")
     st.write('当前版本：20250311')
+
+    if st.button("清空数据库"):
+        clear_database()
     
     # 初始化会话状态
     if 'show_edit_form' not in st.session_state:
