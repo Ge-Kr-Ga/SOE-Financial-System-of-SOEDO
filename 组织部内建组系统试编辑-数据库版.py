@@ -12,8 +12,8 @@ import oss2  # 导入阿里云OSS SDK
 # API KEY
 # sk-11bd18dc8bb741509df1863d9eee9be5
 # 定义文件路径
-CSV_FILE = "ZZBNJZ_records.csv"
-PASSWORD_FILE = "ZZBNJZ_password.txt"
+CSV_FILE = "ZZB_records.csv"
+PASSWORD_FILE = "ZZB_password.txt"
 
 # 阿里云OSS配置
 OSS_ACCESS_KEY_ID = os.environ['OSS_ACCESS_KEY_ID']
@@ -35,15 +35,9 @@ if not os.path.exists(PASSWORD_FILE):
         f.write("123456")  # 默认密码
 
 # 创建数据库引擎
-engine = create_engine('sqlite:///ZZBNJZ_records.db')
+engine = create_engine('sqlite:///ZZB_records.db')
 Base = declarative_base()
-Base.metadata.create_all(engine)
 
-def clear_database():
-    session = Session()
-    session.query(Record).delete()
-    session.commit()
-    st.success("数据库已清空！")
 
 class Record(Base):
     __tablename__ = 'records'
@@ -111,10 +105,8 @@ def set_password(new_password):
 # 页面1: 输入界面
 def input_page():
     st.title("经组财务报销网站")
-    st.write('当前版本：20250311')
+    st.write('当前版本：20250312')
 
-    if st.button("清空数据库"):
-        clear_database()
     
     # 初始化会话状态
     if 'show_edit_form' not in st.session_state:
