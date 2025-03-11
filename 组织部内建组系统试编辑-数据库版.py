@@ -136,6 +136,7 @@ def input_page():
             type=['pdf', 'png', 'jpg', 'jpeg', 'xlsx', 'xls'], 
             help="请上传PDF文件、图片文件（支持PNG、JPG格式）或Excel文件（支持xlsx、xls格式）"
         )
+        operation_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
         submitted = st.form_submit_button("提交")
         
         if submitted:
@@ -177,7 +178,7 @@ def input_page():
                     st.session_state.edit_record_index = existing_record.index[0]
                 else:
                     # 新增记录
-                    new_record = pd.DataFrame([[name, selected_department, item, amount, selected_category, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), pdf_path, remarks]], 
+                    new_record = pd.DataFrame([[name, selected_department, item, amount, selected_category, operation_time, pdf_path, remarks]], 
                                            columns=['姓名', '部门', '上传项目', '金额', '材料分类', '操作时间', 'PDF文件路径', '备注'])
                     df = pd.concat([df, new_record], ignore_index=True)
                     save_data(df)
