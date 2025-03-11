@@ -103,7 +103,8 @@ def set_password(new_password):
 
 # 页面1: 输入界面
 def input_page():
-    st.title("经组财务报销收集系统")
+    st.title("经组财务报销网站")
+    st.write('当前版本：20250311')
     
     # 初始化会话状态
     if 'show_edit_form' not in st.session_state:
