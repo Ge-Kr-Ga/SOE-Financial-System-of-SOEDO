@@ -236,7 +236,7 @@ def details_page():
         st.dataframe(df)
 
         # 删除记录功能
-        record_to_delete = st.selectbox("选择要删除的记录", df.index, format_func=lambda x: f"{df.loc[x, '姓名']} - {df.loc[x, '上传项目']}")
+        record_to_delete = st.selectbox("选择要删除的记录", df.index, format_func=lambda x: f"{x} - {df.loc[x, '姓名']} - {df.loc[x, '上传项目']} - {df.loc[x, '材料分类']}")
         if st.button("删除记录"):
             if st.session_state.get("authenticated", False):
                 # 获取要删除的记录信息
