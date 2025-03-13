@@ -180,10 +180,10 @@ def input_page():
                         return
 
                 df = load_data()
-                existing_record = df[(df['姓名'] == name) & (df['上传项目'] == item)]
+                existing_record = df[(df['上传项目'] == item) & (df['材料分类'] == selected_category)]
 
                 if not existing_record.empty:
-                    st.warning("该人员的此上传项目已经存在！")
+                    st.warning("此活动的该材料已经存在！")
                     st.session_state.show_edit_form = True
                     st.session_state.edit_record_index = existing_record.index[0]
                 else:
