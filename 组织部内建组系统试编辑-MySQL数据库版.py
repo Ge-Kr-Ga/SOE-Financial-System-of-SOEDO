@@ -34,7 +34,7 @@ if not os.path.exists(PASSWORD_FILE):
         f.write("123456")  # 默认密码
 
 # 数据库配置
-DATABASE_URL = 'mysql+pymysql://root:041002@localhost/sys'  # 替换为你的数据库连接信息
+DATABASE_URL = 'mysql+pymysql://root:zhukejia-20041002@rm-uf6n6x9143k2r7tmhqo.mysql.rds.aliyuncs.com:3306/soedo_finance'  # 替换为你的数据库连接信息
 engine = create_engine(DATABASE_URL)
 Base = declarative_base()
 
