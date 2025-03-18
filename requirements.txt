@@ -1,4 +1,5 @@
  streamlit
  pandas
  sqlalchemy
+ pymysq1
  oss2
