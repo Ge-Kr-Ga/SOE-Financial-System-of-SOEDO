@@ -4,3 +4,4 @@
  pymysql
  oss2
  docx
+ exceptions
