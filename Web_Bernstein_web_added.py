@@ -23,7 +23,7 @@ import io
 # # pdfmetrics.registerFont(TTFont('SimHei', str(FONT_DIR / 'SimHei.ttf')))
 # pdfmetrics.registerFont(TTFont('SimSun', path + '/SimSun.ttf'))
 # pdfmetrics.registerFont(TTFont('SimHei', path + '/SimHei.ttf'))
-pdfmetrics.registerFont(TTFont('SimSun', 'simsunb.ttf'))
+pdfmetrics.registerFont(TTFont('SimSun', 'simsun.ttf'))
 pdfmetrics.registerFont(TTFont('SimHei', 'simhei.ttf'))
 
 # # 注册中文字体（需确保系统有对应字体文件）
